@@ -192,13 +192,15 @@ def get_result(correct_chunks, true_chunks, pred_chunks,
     print("precision: %6.2f%%; recall: %6.2f%%; FB1: %6.2f" % (prec, rec, f1))
 
     # for each chunk type, compute precision, recall and FB1 (default values are 0.0)
+    macro_f1 = []
     for t in chunk_types:
         prec, rec, f1 = calc_metrics(correct_chunks[t], pred_chunks[t], true_chunks[t])
         print("%17s: " %t , end='')
         print("precision: %6.2f%%; recall: %6.2f%%; FB1: %6.2f" %
                     (prec, rec, f1), end='')
         print("  %d" % pred_chunks[t])
-
+        macro_f1.append(f1)
+    print("macro-FB1: %6.2f" % (sum(macro_f1)/len(macro_f1)))
     return res
     # you can generate LaTeX output for tables like in
     # http://cnts.uia.ac.be/conll2003/ner/example.tex
